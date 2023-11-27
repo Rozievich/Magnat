@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'magnat.apps.MagnatConfig',
     # External packages
     'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

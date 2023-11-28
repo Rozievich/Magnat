@@ -24,7 +24,8 @@ class Client(models.Model):
         YOU = 4, "Qo'ng'iroq qilingan"
         BOSH = 5, "Boshqa"
     ism = models.CharField(max_length=80)
-    tel_nomer = models.CharField(max_length=13, validators=[validate_phone_number])
+    tel_nomer = models.CharField(max_length=13, validators=[
+                                 validate_phone_number])
     tex_zadacha = models.FileField(
         upload_to="user_texzadacha", blank=True, null=True)
     status = models.PositiveIntegerField(
@@ -32,6 +33,9 @@ class Client(models.Model):
     sabab = models.CharField(max_length=128, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
+
+    def get_status_display_text(self):
+        return dict(self.RateChoice.choices)[self.status]
 
     class Meta:
         ordering = ["-created_at", "-update_at"]
@@ -85,9 +89,11 @@ class Worker(models.Model):
     picture = models.FileField(upload_to="worker/")
     name = models.CharField(max_length=80)
     familiya = models.CharField(max_length=80, blank=True, null=True)
-    sohasi = models.PositiveIntegerField(
-        choices=RateChoice.choices, default=RateChoice.TIK)
+    sohasi = models.PositiveIntegerField(choices=RateChoice.choices, default=RateChoice.TIK)
     created_at = models.DateTimeField(auto_now=True)
+
+    def get_status_display_text(self):
+        return dict(self.RateChoice.choices)[self.sohasi]
 
     class Meta:
         ordering = ["created_at"]

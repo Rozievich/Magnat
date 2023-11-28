@@ -13,10 +13,10 @@ def validate_phone_number(value):
     try:
         phone_validator(value)
     except ValidationError as e:
-        raise ValidationError({'phone_number': e.messages})
+        raise ValidationError(e.messages)
 
 
-class User(models.Model):
+class Client(models.Model):
     class RateChoice(models.IntegerChoices):
         INS = 1, "Kutishda"
         OLM = 2, "Olmadi",
@@ -24,8 +24,7 @@ class User(models.Model):
         YOU = 4, "Qo'ng'iroq qilingan"
         BOSH = 5, "Boshqa"
     ism = models.CharField(max_length=80)
-    tel_nomer = models.CharField(max_length=13, validators=[
-                                 validate_phone_number])
+    tel_nomer = models.CharField(max_length=13, validators=[validate_phone_number])
     tex_zadacha = models.FileField(
         upload_to="user_texzadacha", blank=True, null=True)
     status = models.PositiveIntegerField(
@@ -50,8 +49,8 @@ class MediaCategory(models.Model):
 
 
 class Media(models.Model):
-    media = models.FileField(upload_to="portfolio/")
-    youtube_url = models.URLField()
+    media = models.FileField(upload_to="portfolio/", blank=True, null=True)
+    youtube_url = models.URLField(blank=True, null=True)
     title = models.CharField(max_length=200)
     category = models.ForeignKey(MediaCategory, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -96,6 +96,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+TOKEN = os.getenv('TOKEN')
+CHANNEL = os.getenv("CHANNEL")
 
 JAZZMIN_SETTINGS = {
     "site_title": "Magnat",

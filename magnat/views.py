@@ -33,4 +33,4 @@ class CommentModelViewSet(ModelViewSet):
     queryset = Comment.objects.filter(status=True)
     serializer_class = CommentModelSerializer
     permission_classes = [AllowAny]
-    http_method_names = ("post", )
+    http_method_names = ("post", "get")

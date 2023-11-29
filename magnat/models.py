@@ -31,6 +31,7 @@ class Client(models.Model):
     status = models.PositiveIntegerField(
         choices=RateChoice.choices, default=RateChoice.INS)
     sabab = models.CharField(max_length=128, blank=True, null=True)
+    sana = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
@@ -89,7 +90,8 @@ class Worker(models.Model):
     picture = models.FileField(upload_to="worker/")
     name = models.CharField(max_length=80)
     familiya = models.CharField(max_length=80, blank=True, null=True)
-    sohasi = models.PositiveIntegerField(choices=RateChoice.choices, default=RateChoice.TIK)
+    sohasi = models.PositiveIntegerField(
+        choices=RateChoice.choices, default=RateChoice.TIK)
     created_at = models.DateTimeField(auto_now=True)
 
     def get_status_display_text(self):

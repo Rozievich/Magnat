@@ -1,11 +1,13 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework.fields import ReadOnlyField
-from .models import Client, Media, Worker, Comment
+from .models import Client, Media, Worker, Comment, MediaCategory
+from .utils import send_message
 
 
 class ClientModelSerializer(ModelSerializer):
     status = ReadOnlyField()
     sabab = ReadOnlyField()
+    sana = ReadOnlyField()
 
     class Meta:
         model = Client
@@ -17,11 +19,22 @@ class ClientModelSerializer(ModelSerializer):
         data['status'] = user.get_status_display_text()
         return data
 
+    def create(self, validated_data):
+        text = f"Ism: {validated_data.get('ism')}\nTelefon Raqam: {validated_data.get('tel_nomer')}"
+        send_message(text)
+        return super().create(validated_data)
+
 
 class MediaModelSerializer(ModelSerializer):
     class Meta:
         model = Media
         fields = '__all__'
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        category = MediaCategory.objects.get(id=data['category'])
+        data['category'] = category.title
+        return data
 
 
 class WorkerModelSerializer(ModelSerializer):

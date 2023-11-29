@@ -57,8 +57,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('NAME'),
+        'USER': 'postgres',
+        'PASSWORD': os.getenv('PASSWORD'),
+        'HOST': os.getenv('HOST'),
+        'PORT': os.getenv('PORT')
     }
 }
 
@@ -120,7 +124,7 @@ JAZZMIN_SETTINGS = {
 
     "copyright": "Magnat IT Company LTD",
 
-    "search_model": ['auth.User', 'account.Account', 'account.Media'],
+    "search_model": ['magnat.Client'],
 
     "user_avatar": None,
     "show_ui_builder": True,
@@ -148,7 +152,7 @@ JAZZMIN_SETTINGS = {
 
     "hide_models": ['auth.Group'],
 
-    "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
+    "order_with_respect_to": ["auth", "Client", "Media", "Worker"],
 
     "custom_links": {
         "books": [{

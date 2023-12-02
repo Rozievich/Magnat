@@ -22,14 +22,14 @@ INSTALLED_APPS = [
     'magnat.apps.MagnatConfig',
     # External packages
     'rest_framework',
-    "corsheaders",
+    'corsheaders',
     'drf_yasg',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -58,7 +58,6 @@ CORS_ALLOW_HEADERS = (
 
 ROOT_URLCONF = 'config.urls'
 CORS_ALLOW_ALL_ORIGINS = True
-ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -81,11 +80,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('NAME'),
+        'NAME': 'magnat_db',
         'USER': 'postgres',
-        'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': os.getenv('HOST'),
-        'PORT': os.getenv('PORT')
+        'PASSWORD': 'black0613',
+        'HOST': '127.0.0.1',
+        'PORT': 5432
     }
 }
 

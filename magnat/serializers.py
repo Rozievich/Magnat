@@ -55,3 +55,9 @@ class CommentModelSerializer(ModelSerializer):
     class Meta:
         model = Comment
         fields = '__all__'
+
+
+class BlogModelSerializer(ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = 'id', 'title', 'summary', 'created_at'

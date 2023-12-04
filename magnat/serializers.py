@@ -60,4 +60,4 @@ class CommentModelSerializer(ModelSerializer):
 class BlogModelSerializer(ModelSerializer):
     class Meta:
         model = Blog
-        fields = 'id', 'title', 'summary', 'created_at'
+        fields = 'id', 'title', 'summary', 'picture', 'created_at'

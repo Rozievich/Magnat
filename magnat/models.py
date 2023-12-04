@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from .custom_validator import validate_phone_number, validate_image_size, validate_tex_zadacha
+from .custom_validator import validate_phone_number, validate_image_size, validate_tex_zadacha, validate_portfolio
 
 
 class Mijoz(models.Model):
@@ -45,7 +45,7 @@ class PortfolioKategoriya(models.Model):
 
 
 class Portfolio(models.Model):
-    media = models.FileField(upload_to="portfolio/", blank=True, null=True)
+    media = models.FileField(upload_to="portfolio/", blank=True, null=True, validators=[validate_portfolio])
     youtube_url = models.URLField(blank=True, null=True)
     title = models.CharField(max_length=200)
     category = models.ForeignKey(PortfolioKategoriya, on_delete=models.CASCADE)

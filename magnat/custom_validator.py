@@ -23,6 +23,9 @@ def validate_image(value):
 def validate_tex_zadacha(value):
     FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'pdf', 'txt'])(value=value)
 
+def validate_portfolio(value):
+    FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'mov', 'mp4'])(value=value)
+
 
 def validate_phone_number(value):
     phone_validator = RegexValidator(

@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework.fields import ReadOnlyField
-from .models import Client, Media, Worker, Comment, MediaCategory
+from .models import Mijoz, Portfolio, Hodim, Comment, PortfolioKategoriya, Blog
 from .utils import send_message
 
 
@@ -10,12 +10,12 @@ class ClientModelSerializer(ModelSerializer):
     sana = ReadOnlyField()
 
     class Meta:
-        model = Client
+        model = Mijoz
         fields = '__all__'
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        user = Client.objects.get(id=data['id'])
+        user = Mijoz.objects.get(id=data['id'])
         data['status'] = user.get_status_display_text()
         return data
 
@@ -27,24 +27,24 @@ class ClientModelSerializer(ModelSerializer):
 
 class MediaModelSerializer(ModelSerializer):
     class Meta:
-        model = Media
+        model = Portfolio
         fields = '__all__'
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        category = MediaCategory.objects.get(id=data['category'])
+        category = PortfolioKategoriya.objects.get(id=data['category'])
         data['category'] = category.title
         return data
 
 
 class WorkerModelSerializer(ModelSerializer):
     class Meta:
-        model = Worker
+        model = Hodim
         fields = '__all__'
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        user = Worker.objects.get(id=data['id'])
+        user = Hodim.objects.get(id=data['id'])
         data['sohasi'] = user.get_status_display_text()
         return data
 

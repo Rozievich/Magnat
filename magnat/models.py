@@ -1,22 +1,10 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
+from .custom_validator import validate_phone_number, validate_image_size, validate_tex_zadacha
 
 
-def validate_phone_number(value):
-    phone_validator = RegexValidator(
-        regex=r'^\+998[123456789]\d{8}$',
-        message='Telefon raqamingizni to\'g\'ri kiriting, masalan: +998901234567',
-        code='invalid_phone_number'
-    )
-    try:
-        phone_validator(value)
-    except ValidationError as e:
-        raise ValidationError(e.messages)
-
-
-class Client(models.Model):
+class Mijoz(models.Model):
     class RateChoice(models.IntegerChoices):
         INS = 1, "Kutishda"
         OLM = 2, "Olmadi",
@@ -24,12 +12,9 @@ class Client(models.Model):
         YOU = 4, "Qo'ng'iroq qilingan"
         BOSH = 5, "Boshqa"
     ism = models.CharField(max_length=80)
-    tel_nomer = models.CharField(max_length=13, validators=[
-                                 validate_phone_number])
-    tex_zadacha = models.FileField(
-        upload_to="user_texzadacha", blank=True, null=True)
-    status = models.PositiveIntegerField(
-        choices=RateChoice.choices, default=RateChoice.INS)
+    tel_nomer = models.CharField(max_length=13, validators=[validate_phone_number])
+    tex_zadacha = models.FileField(upload_to="user_texzadacha", blank=True, null=True, validators=[validate_tex_zadacha])
+    status = models.PositiveIntegerField(choices=RateChoice.choices, default=RateChoice.INS)
     sabab = models.CharField(max_length=128, blank=True, null=True)
     sana = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -40,29 +25,37 @@ class Client(models.Model):
 
     class Meta:
         ordering = ["-created_at", "-update_at"]
+        verbose_name = "Mijoz"
+        verbose_name_plural = "Mijozlar"
 
     def __str__(self) -> str:
         return self.ism
 
 
-class MediaCategory(models.Model):
+class PortfolioKategoriya(models.Model):
     title = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return self.title
 
+    class Meta:
+        verbose_name = "PortfolioKategoriya"
+        verbose_name_plural = "PortfolioKategoriyalar"
 
-class Media(models.Model):
+
+class Portfolio(models.Model):
     media = models.FileField(upload_to="portfolio/", blank=True, null=True)
     youtube_url = models.URLField(blank=True, null=True)
     title = models.CharField(max_length=200)
-    category = models.ForeignKey(MediaCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(PortfolioKategoriya, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["-created_at", "-update_at"]
+        verbose_name = "Portfolio"
+        verbose_name_plural = "Portfoliolar"
 
     def __str__(self) -> str:
         return self.title
@@ -80,7 +73,7 @@ class Media(models.Model):
         super().save(*args, **kwargs)
 
 
-class Worker(models.Model):
+class Hodim(models.Model):
     class RateChoice(models.IntegerChoices):
         INS = 1, "SMM"
         OLM = 2, "Director"
@@ -99,6 +92,8 @@ class Worker(models.Model):
 
     class Meta:
         ordering = ["created_at"]
+        verbose_name = "Hodim"
+        verbose_name_plural = "Hodimlar"
 
     def __str__(self) -> str:
         return self.name
@@ -112,3 +107,22 @@ class Comment(models.Model):
 
     def __str__(self) -> str:
         return self.summary
+
+    class Meta:
+        ordering = ["-status"]
+        verbose_name = "Comment"
+        verbose_name_plural = "Commentlar"
+
+
+class Blog(models.Model):
+    picture = models.FileField(
+        upload_to="blog/", validators=[validate_image_size])
+    title = models.CharField(max_length=255)
+    summary = models.TextField()
+    created_at = models.DateField(auto_now_add=True)
+    update_at = models.DateField(auto_now=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Blog"
+        verbose_name_plural = "Bloglar"

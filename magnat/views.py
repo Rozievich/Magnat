@@ -1,12 +1,11 @@
 from rest_framework.permissions import AllowAny
 from rest_framework.parsers import MultiPartParser
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import CreateAPIView
 from .serializers import ClientModelSerializer, MediaModelSerializer, WorkerModelSerializer, CommentModelSerializer
-from .models import Client, Media, Worker, Comment
+from .models import Mijoz, Portfolio, Hodim, Comment
 
 class ClientModeViewSet(ModelViewSet):
-    queryset = Client.objects.all()
+    queryset = Mijoz.objects.all()
     serializer_class = ClientModelSerializer
     permission_classes = [AllowAny]
     parser_classes = [MultiPartParser]
@@ -14,7 +13,7 @@ class ClientModeViewSet(ModelViewSet):
 
 
 class MediaModelViewSet(ModelViewSet):
-    queryset = Media.objects.all()
+    queryset = Portfolio.objects.all()
     serializer_class = MediaModelSerializer
     permission_classes = [AllowAny]
     parser_classes = [MultiPartParser]
@@ -22,7 +21,7 @@ class MediaModelViewSet(ModelViewSet):
 
 
 class WorkerModelViewSet(ModelViewSet):
-    queryset = Worker.objects.all()
+    queryset = Hodim.objects.all()
     serializer_class = WorkerModelSerializer
     permission_classes = [AllowAny]
     parser_classes = [MultiPartParser]

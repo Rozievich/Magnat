@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Client, Media, Comment, Worker, MediaCategory
+from .models import Mijoz, PortfolioKategoriya, Portfolio, Blog, Hodim, Comment
 
 
-@admin.register(Client)
+@admin.register(Mijoz)
 class ClientModelAdmin(admin.ModelAdmin):
     list_display = ['ism', 'tel_nomer', 'status', 'sana']
     actions = ['kutishda', 'olmadi', 'rad_etilgan', 'qongiroq_qilingan']
@@ -24,12 +24,12 @@ class ClientModelAdmin(admin.ModelAdmin):
     qongiroq_qilingan.short_description = "Qo'ng'iroq qilingan"
 
 
-@admin.register(Media)
+@admin.register(Portfolio)
 class MediaModelAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'created_at']
 
 
-@admin.register(Worker)
+@admin.register(Hodim)
 class WorkerModelAdmin(admin.ModelAdmin):
     list_display = ['name', 'familiya', 'sohasi']
 
@@ -48,6 +48,11 @@ class CommentModelAdmin(admin.ModelAdmin):
     disapprove_selected_comments.short_description = "Tanlangan commentlarni rad etish"
 
 
-@admin.register(MediaCategory)
+@admin.register(PortfolioKategoriya)
 class MediaCargoryModelAdmin(admin.ModelAdmin):
     list_display = ['title']
+
+
+@admin.register(Blog)
+class BlogModelAdmin(admin.ModelAdmin):
+    list_display = ['title', 'summary']

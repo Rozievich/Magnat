@@ -125,11 +125,11 @@ TOKEN = os.getenv('TOKEN')
 CHANNEL = os.getenv("CHANNEL")
 
 JAZZMIN_SETTINGS = {
-    "site_title": "Magnat",
+    "site_title": "BMG Soft",
 
-    "site_header": "Magnat",
+    "site_header": "BMG Soft",
 
-    "site_brand": "Magnat",
+    "site_brand": "BMG Soft",
 
     "site_logo": None,
 
@@ -141,9 +141,9 @@ JAZZMIN_SETTINGS = {
 
     "site_icon": None,
 
-    "welcome_sign": "Admin page for Magnat IT company",
+    "welcome_sign": "Admin page for BMG Soft IT company",
 
-    "copyright": "Magnat IT Company LTD",
+    "copyright": "BMG Soft LTD",
 
     "search_model": ['magnat.Client'],
 
